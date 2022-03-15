@@ -14,6 +14,7 @@ $$
 $$
 LANGUAGE plpgsql;
 
+/*
 CREATE OR REPLACE FUNCTION nb_occurences(caractère varchar, chaine varchar, indice_debut integer, indice_fin integer) RETURNS integer AS
 $$
     DECLARE
@@ -25,6 +26,27 @@ $$
                     resultat := resultat+1 ;
                 end if;
             end if;
+        end loop ;
+        return resultat ;
+    END;
+$$
+LANGUAGE plpgsql;
+*/
+
+CREATE OR REPLACE FUNCTION nb_occurences(caractère varchar, chaine varchar, indice_debut integer, indice_fin integer) RETURNS integer AS
+$$
+    DECLARE
+        resultat integer :=0;
+        i integer := indice_debut;
+    BEGIN
+        LOOP
+            if indice_debut<length(chaine) and indice_fin<length(chaine) and indice_debut<indice_fin THEN
+                if caractère = substr(chaine,i,1) THEN
+                    resultat := resultat+1 ;
+                    i := i+1;
+                end if;
+            end if;
+            exit when i = indice_fin ;
         end loop ;
         return resultat ;
     END;
