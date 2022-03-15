@@ -72,3 +72,25 @@ $$
     END;
 $$
 LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION getNbJoursParMois(une_date date) RETURNS integer AS
+$$
+    DECLARE
+        mois integer := EXTRACT(MONTH FROM une_date);
+        annee integer := EXTRACT(YEAR FROM une_date);
+        resultat integer;
+    BEGIN
+        IF mois=04 or mois=06 or mois=09 or mois=11 THEN
+            resultat := 30;
+        ELSIF mois=01 or mois=03 or mois=05 or mois=07 or mois=08 or mois=10 or mois=12 THEN
+            resultat := 31;
+        ELSIF mois = 02 and annee%4 = 0 THEN
+            resultat := 29;
+        ELSE
+            resultat := 28;
+        END IF;
+        return resultat;
+    END;
+$$
+LANGUAGE plpgsql;
