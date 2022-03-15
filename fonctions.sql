@@ -94,3 +94,18 @@ $$
     END;
 $$
 LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION dateSqlToDatefr(une_date date) RETURNS varchar AS
+$$
+    DECLARE
+        jour integer := EXTRACT(DAY FROM une_date);
+        mois integer := EXTRACT(MONTH FROM une_date);
+        annee integer := EXTRACT(YEAR FROM une_date);
+        date_finale varchar;
+    BEGIN
+        date_finale := jour||'/'||mois||'/'||annee;
+        return date_finale;
+    END;
+$$
+LANGUAGE plpgsql;
